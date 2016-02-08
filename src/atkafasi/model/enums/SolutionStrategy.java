@@ -1,5 +1,5 @@
 package atkafasi.model.enums;
 
 public enum SolutionStrategy {
-	SinglePoint;
+	SinglePoint, VerticalLines, HorizontalLines;
 }
