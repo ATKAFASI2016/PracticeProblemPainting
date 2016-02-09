@@ -1,6 +1,7 @@
 package main;
 
 import atkafasi.model.data.DataPart;
+import atkafasi.model.data.ParseResultPojo;
 import atkafasi.model.enums.SolutionStrategy;
 import atkafasi.model.instructions.Instructions;
 import atkafasi.reader.AtKafasiReaderException;
@@ -13,6 +14,9 @@ import atkafasi.writer.OutputWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Launcher {
 
@@ -32,19 +36,16 @@ public class Launcher {
             System.err.println("Check file path: " + fileName);
         }
 
-        boolean[][] data = null;
+        ParseResultPojo result;
         try {
-            data = InputReader.readFileInto2DArr(file);
+            result = InputReader.readFileInto2DArr(file);
         } catch (AtKafasiReaderException | IOException e) {
             System.err.println("Exception occurred, while reading file : " + file + "\n" + e.getMessage());
             return;
         }
 
-        if (data == null) {
-            System.err.println("Resulting array null");
-        }
-
-        List<DataPart> dataParts = DataSplitter.split(data);
+        assert result != null;
+        List<DataPart> dataParts = DataSplitter.split(result.getAsciiData());
 
         Solution solution = SolutionFactory.getSolution(solutionStrategy);
 

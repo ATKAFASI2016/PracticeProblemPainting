@@ -1,5 +1,7 @@
 package atkafasi.reader;
 
+import atkafasi.model.data.ParseResultPojo;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -13,7 +15,7 @@ public class InputReader {
      * @param fileName
      * @return
      */
-    public static boolean[][] readFileInto2DArr(String fileName) throws AtKafasiReaderException, IOException {
+    public static ParseResultPojo readFileInto2DArr(String fileName) throws AtKafasiReaderException, IOException {
 
         boolean[][] result = null;
 
@@ -64,6 +66,7 @@ public class InputReader {
         if (result == null) {
             throw new ReaderResultNullException("Somehow resulting array returned null!");
         }
-        return result;
+
+        return new ParseResultPojo(rowMax, columnMax, result);
     }
 }
