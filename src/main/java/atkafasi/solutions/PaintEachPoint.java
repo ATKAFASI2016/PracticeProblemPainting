@@ -1,31 +1,32 @@
 package atkafasi.solutions;
 
+import atkafasi.model.data.ParseResultPojo;
+import atkafasi.model.instructions.Instructions;
+import atkafasi.model.instructions.Point;
+
+import java.util.ArrayList;
 import java.util.List;
 
-import atkafasi.model.instructions.Instructions;
-
+/**
+ * Dummiest instruction generator. Examines 2 dimensional array one-by-one. If there is a painting at specified cell, appends instruction.
+ */
 public class PaintEachPoint implements Solution {
 
-	@Override
-	public List<Instructions> solve(boolean[][] matrix) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	// @Override
-	// public List<Instructions> solve(DataPart dataPart) {
-	//
-	// List<Instructions> result = new ArrayList<>();
-	//
-	// for (int y = 0; y < dataPart.getyLen(); y++) {
-	// for (int x = 0; x < dataPart.getxLen(); x++) {
-	// if (dataPart.getData()[y][x]) {
-	// result.add(new Point(x + dataPart.getStartX(), y +
-	// dataPart.getStartY()));
-	// }
-	// }
-	// }
-	// return result;
-	// }
+    @Override
+    public List<Instructions> solve(ParseResultPojo frameData) {
 
+        List<Instructions> instructionList = new ArrayList<>();
+
+        for (int i = 0; i < frameData.getRowNumber(); i++) {
+            for (int j = 0; j < frameData.getColumnNumber(); j++) {
+                if (frameData.getAsciiData()[i][j]) {
+                    instructionList.add(new Point(i, j));
+                }
+            }
+        }
+
+
+        return instructionList;
+    }
 }

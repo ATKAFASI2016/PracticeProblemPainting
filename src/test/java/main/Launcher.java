@@ -15,46 +15,47 @@ import atkafasi.writer.OutputWriter;
 
 public class Launcher {
 
-	/**
-	 * Program starts here! ------ fileName should be changed
-	 */
+    /**
+     * Program starts here! ------ fileName should be changed
+     */
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		String fileName = "logo";
+        String fileName = "logo";
 
-		SolutionStrategy solutionStrategy = SolutionStrategy.SinglePoint;
+        SolutionStrategy solutionStrategy = SolutionStrategy.SinglePoint;
 
-		String file = Launcher.class.getResource("/inputFiles/" + fileName + ".in").getFile();
+        String file = Launcher.class.getResource("/inputFiles/" + fileName + ".in").getFile();
 
-		if (file == null || file.isEmpty()) {
-			System.err.println("Check file path: " + fileName);
-		}
+        if (file == null || file.isEmpty()) {
+            System.err.println("Check file path: " + fileName);
+        }
 
-		ParseResultPojo result;
-		try {
-			result = InputReader.readFileInto2DArr(file);
-		} catch (AtKafasiReaderException | IOException e) {
-			System.err.println("Exception occurred, while reading file : " + file + "\n" + e.getMessage());
-			return;
-		}
+        ParseResultPojo result;
+        try {
+            result = InputReader.readFileInto2DArr(file);
+        } catch (AtKafasiReaderException | IOException e) {
+            System.err.println("Exception occurred, while reading file : " + file + "\n" + e.getMessage());
+            return;
+        }
 
-		assert result != null;
+        assert result != null;
 
-		Solution solution = SolutionFactory.getSolution(solutionStrategy);
+        Solution solution = SolutionFactory.getSolution(solutionStrategy);
 
-		List<Instructions> instructionsList = new ArrayList<>();
+        List<Instructions> instructionsList = solution.solve(result);
 
-		for (Instructions instruction : solution.solve(result.getAsciiData())) {
-			instructionsList.add(instruction);
-		}
+        if (!instructionsList.isEmpty()) {
+            try {
+                OutputWriter.instructionWriter(instructionsList, fileName + "_" + solutionStrategy.toString() + ".out");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.err.println("Seems there is no instruction set generated. Output file is not created!");
+        }
 
-		try {
-			OutputWriter.instructionWriter(instructionsList, fileName + "_" + solutionStrategy.toString() + ".out");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
-	}
+    }
 
 }

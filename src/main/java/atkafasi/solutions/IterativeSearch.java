@@ -1,12 +1,14 @@
 package atkafasi.solutions;
 
-import java.util.List;
-
 import atkafasi.model.data.ParseResultPojo;
 import atkafasi.model.instructions.Instructions;
 
-public class HorizontalLines implements Solution {
+import java.util.List;
 
+/**
+ * Created by gilmour on 09.02.2016.
+ */
+public class IterativeSearch implements Solution {
 
     @Override
     public List<Instructions> solve(ParseResultPojo frameData) {
