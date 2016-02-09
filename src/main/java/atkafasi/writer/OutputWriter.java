@@ -10,20 +10,27 @@ import atkafasi.model.instructions.Instructions;
 
 public class OutputWriter {
 
-	public static void write(List<Instructions> intructionList, String fileName) throws IOException {
+    public static void instructionWriter(List<Instructions> instructionsList, String fileName) throws IOException {
 
-		File file = new File(fileName);
-		if (!file.exists()) {
-			file.createNewFile();
-		}
+        File file = new File(fileName);
+        boolean result = file.createNewFile();
 
-		FileWriter fw = new FileWriter(file.getAbsoluteFile());
-		BufferedWriter bw = new BufferedWriter(fw);
-		for (int i = 0; i < intructionList.size(); i++) {
-			bw.write(intructionList.get(i).toInstructionString() + "\n");
-		}
+        if (!result) {
+            System.out.println(fileName + " already exists, will be overwritten");
+        }
 
-		bw.close();
-	}
+        FileWriter fw = new FileWriter(file.getAbsoluteFile());
+        BufferedWriter bw = new BufferedWriter(fw);
+
+        for (Instructions anInstructionsList : instructionsList) {
+            bw.write(anInstructionsList.toInstructionString() + "\n");
+        }
+
+        bw.close();
+    }
+
+    public static void asciiWriter(List<Instructions> instructionsList) {
+
+    }
 
 }

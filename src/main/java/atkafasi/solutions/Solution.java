@@ -7,6 +7,6 @@ import atkafasi.model.instructions.Instructions;
 
 public interface Solution {
 
-	public List<Instructions> solve(DataPart dataPart);
+    List<Instructions> solve(DataPart dataPart);
 
 }
