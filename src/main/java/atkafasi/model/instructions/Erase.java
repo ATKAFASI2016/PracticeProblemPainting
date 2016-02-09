@@ -10,7 +10,15 @@ public class Erase implements Instructions{
 		this.r=y;
 		this.c=x;
 	}
-	
+
+	public int getR() {
+		return r;
+	}
+
+	public int getC() {
+		return c;
+	}
+
 	@Override
 	public String toInstructionString() {
 		return commandName+" "+r+" "+c;

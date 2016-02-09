@@ -1,9 +1,5 @@
 package main;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import atkafasi.model.data.ParseResultPojo;
 import atkafasi.model.enums.SolutionStrategy;
 import atkafasi.model.instructions.Instructions;
@@ -11,7 +7,11 @@ import atkafasi.reader.AtKafasiReaderException;
 import atkafasi.reader.InputReader;
 import atkafasi.solutions.Solution;
 import atkafasi.solutions.SolutionFactory;
+import atkafasi.writer.IllegalInstructionFound;
 import atkafasi.writer.OutputWriter;
+
+import java.io.IOException;
+import java.util.List;
 
 public class Launcher {
 
@@ -47,8 +47,11 @@ public class Launcher {
 
         if (!instructionsList.isEmpty()) {
             try {
+
                 OutputWriter.instructionWriter(instructionsList, fileName + "_" + solutionStrategy.toString() + ".out");
-            } catch (IOException e) {
+                OutputWriter.generateAsciiImage(fileName + "_" + solutionStrategy.toString() + ".io", result, instructionsList);
+
+            } catch (IOException | IllegalInstructionFound e) {
                 e.printStackTrace();
             }
         } else {

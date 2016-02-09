@@ -35,4 +35,19 @@ public class Line implements Instructions {
 		this.c2 = c2;
 	}
 
+	public int getR1() {
+		return r1;
+	}
+
+	public int getC1() {
+		return c1;
+	}
+
+	public int getR2() {
+		return r2;
+	}
+
+	public int getC2() {
+		return c2;
+	}
 }
