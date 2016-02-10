@@ -62,7 +62,7 @@ public class IterativeSearch implements Solution {
                     }
 
                     // check square load ratio
-                    float squareRatio = numberOfLoadedCell / cellNumberOfIdentityMatrix;
+                    float squareRatio = 1f * numberOfLoadedCell / cellNumberOfIdentityMatrix;
 
                     if (Float.compare(squareRatio, this.ratio) >= 0) {
                         // add as an instruction
