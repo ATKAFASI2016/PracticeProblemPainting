@@ -19,6 +19,8 @@ public class SolutionFactory {
                 return new VerticalLines();
             case SinglePoint:
                 return new PaintEachPoint();
+            case IterativeSearch:
+                return new IterativeSearch();
             default:
                 return new PaintEachPoint();
         }
