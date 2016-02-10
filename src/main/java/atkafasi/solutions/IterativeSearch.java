@@ -1,8 +1,10 @@
 package atkafasi.solutions;
 
 import atkafasi.model.data.ParseResultPojo;
+import atkafasi.model.instructions.HLine;
 import atkafasi.model.instructions.Instructions;
 import atkafasi.model.instructions.Square;
+import atkafasi.model.instructions.VLine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +24,13 @@ public class IterativeSearch implements Solution {
         List<Instructions> squareInstructions = findSquareShapes(frameData);
 
         // find vertical lines
+        List<Instructions> horizontalLineInstructions = findHorizontalLineShapes(frameData);
 
         // find horizontal lines
 
-        // erase if necessary
+        List<Instructions> verticalLineInstructions = findVerticalLineShapes(frameData);
 
+        // erase if necessary
 
         // combine results
 
@@ -76,6 +80,63 @@ public class IterativeSearch implements Solution {
         return squareInsList;
     }
 
+    private List<Instructions> findHorizontalLineShapes(ParseResultPojo frameData) {
+
+
+        List<Instructions> horizontalInsList = new ArrayList<>();
+
+        // R1 == R2
+        for (int row = 0; row < frameData.getRowNumber(); row++) {
+            for (int col = 0; col < frameData.getColumnNumber(); col++) {
+                if (frameData.getAsciiData()[row][col]) {
+
+                    int offset = 0;
+
+                    while (col + offset < frameData.getColumnNumber() && frameData.getAsciiData()[row][col + offset]) {
+                        offset += 1;
+                    }
+
+                    if (offset > 0) {
+                        horizontalInsList.add(new HLine(row, col, col + offset - 1));
+                    }
+
+                    col += offset;
+                }
+
+            }
+        }
+
+
+        return horizontalInsList;
+    }
+
+    private List<Instructions> findVerticalLineShapes(ParseResultPojo frameData) {
+
+        List<Instructions> verticalInsList = new ArrayList<>();
+
+
+        // C1 == C2
+        for (int col = 0; col < frameData.getColumnNumber(); col++) {
+            for (int row = 0; row < frameData.getRowNumber(); row++) {
+                if (frameData.getAsciiData()[row][col]) {
+                    int offset = 0;
+
+                    while (row + offset < frameData.getRowNumber() && frameData.getAsciiData()[row + offset][col]) {
+                        offset += 1;
+                    }
+
+                    if (offset > 0) {
+                        verticalInsList.add(new VLine(row, row + offset - 1, col));
+                    }
+
+                    row += offset;
+                }
+            }
+        }
+
+
+        return verticalInsList;
+    }
 
     public float getRatio() {
         return ratio;
