@@ -1,13 +1,12 @@
 package atkafasi.solutions;
 
 import atkafasi.model.data.ParseResultPojo;
-import atkafasi.model.instructions.HLine;
-import atkafasi.model.instructions.Instructions;
-import atkafasi.model.instructions.Square;
-import atkafasi.model.instructions.VLine;
+import atkafasi.model.instructions.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by gilmour on 09.02.2016.
@@ -16,11 +15,14 @@ public class IterativeSearch implements Solution {
 
     float ratio;
 
+    // FIXME Bad usage
+    // Single point instructions initialized when vertical, horizontal line examination method
+    Set<Instructions> singlePointInstructions = new HashSet<>();
+
     @Override
     public List<Instructions> solve(final ParseResultPojo frameData) {
 
         // find squares
-
         List<Instructions> squareInstructions = findSquareShapes(frameData);
 
         // find vertical lines
@@ -82,6 +84,7 @@ public class IterativeSearch implements Solution {
 
     private List<Instructions> findHorizontalLineShapes(ParseResultPojo frameData) {
 
+        System.out.println("--- horizontal lines ---");
 
         List<Instructions> horizontalInsList = new ArrayList<>();
 
@@ -97,7 +100,12 @@ public class IterativeSearch implements Solution {
                     }
 
                     if (offset > 0) {
-                        horizontalInsList.add(new HLine(row, col, col + offset - 1));
+                        if (offset != 1) {
+                            horizontalInsList.add(new HLine(row, col, col + offset - 1));
+                            System.out.println(new HLine(row, col, col + offset - 1).toInstructionString());
+                        } else {
+                            singlePointInstructions.add(new Point(row, col));
+                        }
                     }
 
                     col += offset;
@@ -111,6 +119,8 @@ public class IterativeSearch implements Solution {
     }
 
     private List<Instructions> findVerticalLineShapes(ParseResultPojo frameData) {
+
+        System.out.println("--- vertical lines ---");
 
         List<Instructions> verticalInsList = new ArrayList<>();
 
@@ -126,7 +136,12 @@ public class IterativeSearch implements Solution {
                     }
 
                     if (offset > 0) {
-                        verticalInsList.add(new VLine(row, row + offset - 1, col));
+                        if (offset != 1) {
+                            verticalInsList.add(new VLine(row, row + offset - 1, col));
+                            System.out.println(new VLine(row, row + offset - 1, col).toInstructionString());
+                        } else {
+                            singlePointInstructions.add(new Point(row, col));
+                        }
                     }
 
                     row += offset;
