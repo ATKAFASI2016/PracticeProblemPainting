@@ -2,7 +2,9 @@ package atkafasi.solutions;
 
 import atkafasi.model.data.ParseResultPojo;
 import atkafasi.model.instructions.Instructions;
+import atkafasi.model.instructions.Square;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,7 +12,8 @@ import java.util.List;
  */
 public class IterativeSearch implements Solution {
 
-       
+    float ratio;
+
     @Override
     public List<Instructions> solve(final ParseResultPojo frameData) {
 
@@ -27,11 +30,12 @@ public class IterativeSearch implements Solution {
 
         // combine results
 
-        return null;
+        return squareInstructions;
     }
 
     private List<Instructions> findSquareShapes(ParseResultPojo frameData) {
 
+        List<Instructions> squareInsList = new ArrayList<>();
 
         int minSide = Math.min(frameData.getRowNumber(), frameData.getColumnNumber());
 
@@ -54,22 +58,30 @@ public class IterativeSearch implements Solution {
 
                             if (frameData.getAsciiData()[tempRow][tempCol])
                                 numberOfLoadedCell++;
-
                         }
                     }
 
                     // check square load ratio
-                    System.err.println("radius = " + radius);
-                    System.err.println("row: " + row + " col: " + col + "\n total: " + cellNumberOfIdentityMatrix + " loaded: " + numberOfLoadedCell);
+                    float squareRatio = numberOfLoadedCell / cellNumberOfIdentityMatrix;
 
-
+                    if (Float.compare(squareRatio, this.ratio) >= 0) {
+                        // add as an instruction
+                        squareInsList.add(new Square(row, col, radius));
+                    }
 
                 }
             }
         }
 
-        return null;
+        return squareInsList;
     }
 
 
+    public float getRatio() {
+        return ratio;
+    }
+
+    public void setRatio(float ratio) {
+        this.ratio = ratio;
+    }
 }
