@@ -22,45 +22,57 @@ public class Launcher {
 
     public static void main(String[] args) {
 
-	String fileName = "learn_and_teach";
-
 	SolutionStrategy solutionStrategy = SolutionStrategy.IterativeSearch;
 
-	String file = Launcher.class.getResource("/inputFiles/" + fileName + ".in").getFile();
+	String[] resourceFileNames = { "learn_and_teach", "logo", "right_angle", "test_1" };
 
-	if (file == null || file.isEmpty()) {
-	    System.err.println("Check file path: " + fileName);
-	}
+	for (int fIndex = 0; fIndex < resourceFileNames.length; fIndex++) {
 
-	ParseResultPojo result;
-	try {
-	    result = InputReader.readFileInto2DArr(file);
-	} catch (AtKafasiReaderException | IOException e) {
-	    System.err.println("Exception occurred, while reading file : " + file + "\n" + e.getMessage());
-	    return;
-	}
+	    String fileName = resourceFileNames[fIndex];
 
-	assert result != null;
+	    System.out.println("------------------------------------------------------");
+	    System.out.println("Starting instruction generation for file = " + fileName);
 
-	Solution solution = SolutionFactory.getSolution(solutionStrategy);
+	    String file = Launcher.class.getResource("/inputFiles/" + fileName + ".in").getFile();
 
-	((IterativeSearch) solution).setRatio(.7f);
-
-	List<Instructions> instructionsList = solution.solve(result);
-
-	if (instructionsList != null && !instructionsList.isEmpty()) {
-	    try {
-
-		OutputWriter.instructionWriter(instructionsList, fileName + "_" + solutionStrategy.toString() + ".out");
-		OutputWriter.generateAsciiImage(fileName + "_" + solutionStrategy.toString() + ".io", result, instructionsList);
-
-	    } catch (IOException | IllegalInstructionFound e) {
-		e.printStackTrace();
+	    if (file == null || file.isEmpty()) {
+		System.err.println("Check file path: " + fileName);
 	    }
-	} else {
-	    System.err.println("Seems there is no instruction set generated. Output file is not created!");
+
+	    ParseResultPojo result;
+	    try {
+		result = InputReader.readFileInto2DArr(file);
+	    } catch (AtKafasiReaderException | IOException e) {
+		System.err.println("Exception occurred, while reading file : " + file + "\n" + e.getMessage());
+		return;
+	    }
+
+	    assert result != null;
+
+	    // Heuristic ratio lower value is .8f
+	    for (float ratio = .8f; Float.compare(ratio, 1f) <= 0; ratio += .1f) {
+
+		Solution solution = SolutionFactory.getSolution(solutionStrategy);
+		((IterativeSearch) solution).setRatio(ratio);
+		List<Instructions> instructionsList = solution.solve(result);
+
+		System.out.println("- There is " + instructionsList.size() + " instructions for ratio " + ratio);
+
+		if (instructionsList != null && !instructionsList.isEmpty()) {
+		    try {
+			OutputWriter.instructionWriter(instructionsList, fileName + "_" + solutionStrategy.toString() + "_" + ratio + ".out");
+			OutputWriter.generateAsciiImage(fileName + "_" + solutionStrategy.toString() + "_" + ratio + ".io", result, instructionsList);
+		    } catch (IOException | IllegalInstructionFound e) {
+			e.printStackTrace();
+		    }
+		} else {
+		    System.err.println("Seems there is no instruction set generated. Output file is not created!");
+		}
+
+	    }
+
+	    // new line
+	    System.out.println();
 	}
-
     }
-
 }

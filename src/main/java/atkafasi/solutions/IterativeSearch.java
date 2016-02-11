@@ -167,9 +167,6 @@ public class IterativeSearch implements Solution {
 		}
 	    }
 	}
-
-	System.out.println("resultInstList = " + resultInstList.size());
-
 	return resultInstList;
     }
 

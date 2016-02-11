@@ -22,8 +22,13 @@ public class OutputWriter {
 
 	FileWriter fw = new FileWriter(file.getAbsoluteFile());
 	try (BufferedWriter bw = new BufferedWriter(fw)) {
+
+	    bw.write("" + instructionsList.size());
+	    bw.newLine();
+
 	    for (Instructions anInstructionsList : instructionsList) {
-		bw.write(anInstructionsList.toInstructionString() + "\n");
+		bw.write(anInstructionsList.toInstructionString());
+		bw.newLine();
 	    }
 	}
     }
