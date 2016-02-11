@@ -1,5 +1,5 @@
 package atkafasi.model.enums;
 
 public enum SolutionStrategy {
-    SinglePoint, VerticalLines, HorizontalLines, IterativeSearch;
+	SinglePoint, VerticalLines, HorizontalLines,IterativeSearch,SortedObjects;
 }
