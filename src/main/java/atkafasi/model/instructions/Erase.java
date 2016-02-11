@@ -1,27 +1,32 @@
 package atkafasi.model.instructions;
 
-public class Erase implements Instructions{
+public class Erase extends Instructions {
 
-	private static String commandName = "ERASE_CELL";
-	private int r;
-	private int c;
-	
-	public Erase(int x,int y) {
-		this.r=y;
-		this.c=x;
-	}
+    private static String commandName = "ERASE_CELL";
 
-	public int getR() {
-		return r;
-	}
+    private int r;
 
-	public int getC() {
-		return c;
-	}
+    private int c;
 
-	@Override
-	public String toInstructionString() {
-		return commandName+" "+r+" "+c;
-	}
+    public Erase(int row, int col) {
+
+	this.r = row;
+	this.c = col;
+    }
+
+    public int getR() {
+
+	return r;
+    }
+
+    public int getC() {
+
+	return c;
+    }
+
+    @Override public String toInstructionString() {
+
+	return commandName + " " + r + " " + c;
+    }
 
 }

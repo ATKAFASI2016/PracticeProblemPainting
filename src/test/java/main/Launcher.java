@@ -22,51 +22,47 @@ public class Launcher {
 
     public static void main(String[] args) {
 
-        String fileName = "logo";
+	String fileName = "learn_and_teach";
 
-        SolutionStrategy solutionStrategy = SolutionStrategy.SinglePoint;
+	SolutionStrategy solutionStrategy = SolutionStrategy.IterativeSearch;
 
-        String file = Launcher.class.getResource("/inputFiles/" + fileName + ".in").getFile();
+	String file = Launcher.class.getResource("/inputFiles/" + fileName + ".in").getFile();
 
-        if (file == null || file.isEmpty()) {
-            System.err.println("Check file path: " + fileName);
-        }
+	if (file == null || file.isEmpty()) {
+	    System.err.println("Check file path: " + fileName);
+	}
 
-        ParseResultPojo result;
-        try {
-            result = InputReader.readFileInto2DArr(file);
-        } catch (AtKafasiReaderException | IOException e) {
-            System.err.println("Exception occurred, while reading file : " + file + "\n" + e.getMessage());
-            return;
-        }
+	ParseResultPojo result;
+	try {
+	    result = InputReader.readFileInto2DArr(file);
+	} catch (AtKafasiReaderException | IOException e) {
+	    System.err.println("Exception occurred, while reading file : " + file + "\n" + e.getMessage());
+	    return;
+	}
 
-        assert result != null;
+	assert result != null;
 
+	Solution solution = SolutionFactory.getSolution(solutionStrategy);
 
-        Solution solution = SolutionFactory.getSolution(SolutionStrategy.IterativeSearch);
+	((IterativeSearch) solution).setRatio(.7f);
 
-        ((IterativeSearch) solution).setRatio(.7f);
+	List<Instructions> instructionsList = solution.solve(result);
 
-        List<Instructions> instructionsList = solution.solve(result);
+	//        Solution solution = SolutionFactory.getSolution(solutionStrategy);
+	//        List<Instructions> instructionsList = solution.solve(result);
 
+	if (instructionsList != null && !instructionsList.isEmpty()) {
+	    try {
 
-//        Solution solution = SolutionFactory.getSolution(solutionStrategy);
-//        List<Instructions> instructionsList = solution.solve(result);
+		OutputWriter.instructionWriter(instructionsList, fileName + "_" + solutionStrategy.toString() + ".out");
+		OutputWriter.generateAsciiImage(fileName + "_" + solutionStrategy.toString() + ".io", result, instructionsList);
 
-
-        if (instructionsList != null && !instructionsList.isEmpty()) {
-            try {
-
-                OutputWriter.instructionWriter(instructionsList, fileName + "_" + solutionStrategy.toString() + ".out");
-                OutputWriter.generateAsciiImage(fileName + "_" + solutionStrategy.toString() + ".io", result, instructionsList);
-
-            } catch (IOException | IllegalInstructionFound e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.err.println("Seems there is no instruction set generated. Output file is not created!");
-        }
-
+	    } catch (IOException | IllegalInstructionFound e) {
+		e.printStackTrace();
+	    }
+	} else {
+	    System.err.println("Seems there is no instruction set generated. Output file is not created!");
+	}
 
     }
 

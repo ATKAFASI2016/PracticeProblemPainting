@@ -1,6 +1,6 @@
 package atkafasi.model.instructions;
 
-public class Line implements Instructions {
+public class Line extends Instructions {
     private static String commandName = "PAINT_LINE";
     private int r1;
     private int c1;
@@ -50,4 +50,5 @@ public class Line implements Instructions {
     public int getC2() {
         return c2;
     }
+
 }

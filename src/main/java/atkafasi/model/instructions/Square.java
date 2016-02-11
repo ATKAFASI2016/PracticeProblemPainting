@@ -1,6 +1,6 @@
 package atkafasi.model.instructions;
 
-public class Square implements Instructions {
+public class Square extends Instructions {
 
     private static String commandName = "PAINT_SQUARE";
     private int row;
