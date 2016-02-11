@@ -48,9 +48,6 @@ public class Launcher {
 
 	List<Instructions> instructionsList = solution.solve(result);
 
-	//        Solution solution = SolutionFactory.getSolution(solutionStrategy);
-	//        List<Instructions> instructionsList = solution.solve(result);
-
 	if (instructionsList != null && !instructionsList.isEmpty()) {
 	    try {
 
