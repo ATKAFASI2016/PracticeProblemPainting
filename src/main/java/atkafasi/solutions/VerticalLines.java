@@ -7,8 +7,8 @@ import atkafasi.model.instructions.Instructions;
 
 public class VerticalLines implements Solution {
 
-    @Override
-    public List<Instructions> solve(ParseResultPojo frameData) {
-        return null;
-    }
+	@Override
+	public List<Instructions> solve(ParseResultPojo frameData) {
+		return null;
+	}
 }

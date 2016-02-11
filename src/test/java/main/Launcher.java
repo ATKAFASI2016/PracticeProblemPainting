@@ -23,7 +23,7 @@ public class Launcher {
 
         String fileName = "logo";
 
-        SolutionStrategy solutionStrategy = SolutionStrategy.SinglePoint;
+        SolutionStrategy solutionStrategy = SolutionStrategy.SortedObjects;
 
         String file = Launcher.class.getResource("/inputFiles/" + fileName + ".in").getFile();
 
