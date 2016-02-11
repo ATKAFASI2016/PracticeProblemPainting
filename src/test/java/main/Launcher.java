@@ -5,6 +5,7 @@ import atkafasi.model.enums.SolutionStrategy;
 import atkafasi.model.instructions.Instructions;
 import atkafasi.reader.AtKafasiReaderException;
 import atkafasi.reader.InputReader;
+import atkafasi.solutions.IterativeSearch;
 import atkafasi.solutions.Solution;
 import atkafasi.solutions.SolutionFactory;
 import atkafasi.writer.IllegalInstructionFound;
@@ -41,11 +42,19 @@ public class Launcher {
 
         assert result != null;
 
-        Solution solution = SolutionFactory.getSolution(solutionStrategy);
+
+        Solution solution = SolutionFactory.getSolution(SolutionStrategy.IterativeSearch);
+
+        ((IterativeSearch) solution).setRatio(.7f);
 
         List<Instructions> instructionsList = solution.solve(result);
 
-        if (!instructionsList.isEmpty()) {
+
+//        Solution solution = SolutionFactory.getSolution(solutionStrategy);
+//        List<Instructions> instructionsList = solution.solve(result);
+
+
+        if (instructionsList != null && !instructionsList.isEmpty()) {
             try {
 
                 OutputWriter.instructionWriter(instructionsList, fileName + "_" + solutionStrategy.toString() + ".out");
